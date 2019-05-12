@@ -1,26 +1,27 @@
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.4.0'
     }
 }
 
 apply plugin: 'com.android.application'
 
 repositories {
+    google()
     jcenter()
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25"
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.peyo.mictest"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 28
     }
 
     buildTypes {
