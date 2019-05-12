@@ -1,12 +1,9 @@
 package com.peyo.mictest;
 
-import android.Manifest;
 import android.app.Activity;
 import android.media.AudioFormat;
 import android.media.AudioManager;
-import android.media.AudioRecord;
 import android.media.AudioTrack;
-import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,7 +44,9 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 short[] buffer = new short[1024];
-                AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC, SAMPLE_RATE, AudioFormat.CHANNEL_CONFIGURATION_MONO, SAMPLE_ENCODING, getBufferSize(), AudioTrack.MODE_STREAM);
+                AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC,
+                        SAMPLE_RATE, AudioFormat.CHANNEL_CONFIGURATION_MONO,
+                        SAMPLE_ENCODING, getBufferSize(), AudioTrack.MODE_STREAM);
                 float increment = (float)((2.0 * Math.PI) * mFreq / 48000.0); // angular increment for each sample
                 float angle = 0;
                 float samples[] = new float[1024];
@@ -61,7 +60,6 @@ public class MainActivity extends Activity {
                         angle += increment;
                     }
                     track.write( buffer, 0, samples.length );  //write to the audio buffer.... and start all over again!
-
                 }
             }
         }).start();
