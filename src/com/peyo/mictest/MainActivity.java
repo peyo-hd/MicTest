@@ -1,8 +1,8 @@
 package com.peyo.mictest;
 
 import android.app.Activity;
+import android.media.AudioAttributes;
 import android.media.AudioFormat;
-import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,10 +43,20 @@ public class MainActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                AudioTrack track = new AudioTrack.Builder()
+                        .setAudioAttributes(new AudioAttributes.Builder()
+                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build())
+                        .setAudioFormat(new AudioFormat.Builder()
+                                .setEncoding(SAMPLE_ENCODING)
+                                .setSampleRate(SAMPLE_RATE)
+                                .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+                                .build())
+                        .setBufferSizeInBytes(getBufferSize())
+                        .build();
+
                 short[] buffer = new short[1024];
-                AudioTrack track = new AudioTrack(AudioManager.STREAM_MUSIC,
-                        SAMPLE_RATE, AudioFormat.CHANNEL_CONFIGURATION_MONO,
-                        SAMPLE_ENCODING, getBufferSize(), AudioTrack.MODE_STREAM);
                 float increment = (float)((2.0 * Math.PI) * mFreq / 48000.0); // angular increment for each sample
                 float angle = 0;
                 float samples[] = new float[1024];
